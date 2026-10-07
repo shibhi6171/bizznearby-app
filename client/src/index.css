@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply bg-ink-bg text-ink font-sans antialiased; }
+  :focus-visible { outline: 2px solid #3fc45a; outline-offset: 2px; }
+}
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink-line bg-white px-5 py-2.5 font-semibold transition hover:border-brand-green disabled:cursor-not-allowed disabled:opacity-60; }
+  .btn-primary { @apply btn border-brand-green bg-brand-green text-white hover:brightness-95; }
+  .btn-danger { @apply btn border-red-300 text-red-700 hover:border-red-500; }
+  .input { @apply w-full rounded-2xl border border-ink-line bg-white px-4 py-3 outline-none transition focus:border-brand-green; }
+  .label { @apply grid gap-1.5 text-sm font-semibold; }
+  .panel { @apply rounded-3xl border border-ink-line bg-white p-6; }
+  .chip { @apply rounded-full border border-ink-line bg-white px-5 py-2.5 text-sm font-semibold transition hover:border-brand-green; }
+  .chip-on { @apply border-brand-green bg-brand-green text-white shadow-[0_6px_16px_-6px_#3fc45a]; }
+  .err-text { @apply text-sm font-semibold text-brand-red; }
+}
+
+/* ---------- welcome / splash ---------- */
+@keyframes up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ring { 0% { transform: scale(.4); opacity: .55; } 100% { transform: scale(8); opacity: 0; } }
+/* tagline loads red, then a green fill sweeps across the line */
+@keyframes sweep { from { background-position: 100% 0; } to { background-position: 0 0; } }
+
+.anim-up { animation: up .8s cubic-bezier(.2,.7,.2,1) both; }
+.anim-fade { animation: fade .5s ease both; }
+.sp-ring { position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; margin: -60px 0 0 -60px; border: 2px solid #3fc45a; border-radius: 50%; opacity: 0; animation: ring 3s ease-out infinite; }
+.sp-tag {
+  color: transparent;
+  background: linear-gradient(90deg, #3fc45a 50%, #c62828 50%) 100% 0 / 200% 100% no-repeat;
+  -webkit-background-clip: text; background-clip: text;
+  animation: up .9s cubic-bezier(.2,.7,.2,1) 1.1s both, sweep 2.3s cubic-bezier(.4,0,.2,1) 1.3s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim-up, .sp-tag { animation-name: fade; }
+  .sp-tag { animation-name: fade, sweep; }
+  .sp-ring { animation: none; }
+}
+
+/* leaflet needs an explicit size */
+.leaflet-container { width: 100%; height: 100%; border-radius: 1.25rem; font-family: inherit; }
